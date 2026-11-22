@@ -1,0 +1,30 @@
+name: Release
+
+# Publishes to npm with trusted publishing (OIDC) and provenance when a GitHub Release is published.
+# It does nothing until the npm package is set up: create it, add this workflow as its trusted
+# publisher, then set the repository variable NPM_PUBLISH to "true".
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    if: vars.NPM_PUBLISH == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm test
+      - name: Tag matches package version
+        run: test "${GITHUB_REF_NAME#v}" = "$(node -p 'require("./package.json").version')"
+      - run: npm publish --provenance --access public

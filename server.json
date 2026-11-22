@@ -1,0 +1,38 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.TryLadoo/ladoo-mcp",
+  "title": "Ladoo",
+  "description": "Calls, people, agents, knowledge and bookings from your Ladoo AI receptionist workspace.",
+  "version": "0.1.0",
+  "websiteUrl": "https://tryladoo.com/docs/developers",
+  "repository": { "url": "https://github.com/TryLadoo/ladoo-mcp", "source": "github" },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "ladoo-mcp",
+      "version": "0.1.0",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "LADOO_API_KEY",
+          "description": "Ladoo API key from Settings → Developers. A read-only key is enough for the default tools.",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "LADOO_ALLOW_WRITES",
+          "description": "Set to 1 to also register tools that change data.",
+          "isRequired": false,
+          "format": "string"
+        },
+        {
+          "name": "LADOO_TIME_ZONE",
+          "description": "IANA time zone for dates like 2026-11-20. Defaults to the system time zone.",
+          "isRequired": false,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}
